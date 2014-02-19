@@ -80,16 +80,16 @@ namespace WindowsFormsApplication1
         {
             switch (selected)
             {
-                case Elements.bogo_Sort:
+                case Constants.bogo_Sort:
                     bogoSnort(ref data);
                     break;
-                case Elements.bubble_Sort:
+                case Constants.bubble_Sort:
                     SortArray(ref data);
                     break;
-                case Elements.heap_Sort:
+                case Constants.heap_Sort:
                     HeapSort.Sort(data, this.chart1);
                     break;
-                case Elements.quick_Sort:
+                case Constants.quick_Sort:
                     QuickSort.Sort(data, this.chart1);
                     break;
             }

@@ -2,7 +2,7 @@
 
 namespace WindowsFormsApplication1
 {
-    class Elements
+    class Constants
     {
         public const int bogo_Sort   = 0;
         public const int bubble_Sort = 1;

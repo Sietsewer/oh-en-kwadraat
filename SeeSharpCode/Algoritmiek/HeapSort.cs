@@ -30,6 +30,8 @@ namespace WindowsFormsApplication1
                         return;
                     t = arr[n];
                     arr[n] = arr[0];
+                    chart.Series["Series1"].Points.DataBindY(new IEnumerable<int>[] { arr });
+                    chart.Update();
                 }
 
                 parent = i;
@@ -44,8 +46,6 @@ namespace WindowsFormsApplication1
                         arr[parent] = arr[child];
                         parent = child;
                         child = (parent * 2) + 1;
-                        //chart.Series["Series1"].Points.DataBindY(new IEnumerable<int>[] { arr });
-                        //chart.Update();
                     }
                     else
                         break;

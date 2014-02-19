@@ -10,11 +10,14 @@ namespace WindowsFormsApplication1
     public static class QuickSort
     {
         private static Chart chart;
+
         private static void Swap(int[] arr, int a, int b)
         {
             int temp = arr[a];
             arr[a] = arr[b];
             arr[b] = temp;
+            chart.Series["Series1"].Points.DataBindY(new IEnumerable<int>[] { arr });
+            chart.Update();
         }
 
         private static void Sort(int[] arr, int left, int right)
@@ -39,8 +42,7 @@ namespace WindowsFormsApplication1
                     right--;
                     left++;
                 }
-                chart.Series["Series1"].Points.DataBindY(new IEnumerable<int>[] { arr });
-                chart.Update();
+                
             }
 
             Swap(arr, pivot, right);

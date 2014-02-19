@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Windows.Forms.DataVisualization.Charting;
 
-namespace Sorting
+namespace WindowsFormsApplication1
 {
     public static class QuickSort
     {
+        private static Chart chart;
         private static void Swap(int[] arr, int a, int b)
         {
             int temp = arr[a];
@@ -36,6 +39,8 @@ namespace Sorting
                     right--;
                     left++;
                 }
+                chart.Series["Series1"].Points.DataBindY(new IEnumerable<int>[] { arr });
+                chart.Update();
             }
 
             Swap(arr, pivot, right);
@@ -46,8 +51,9 @@ namespace Sorting
                 Sort(arr, pivot + 1, rhold);
         }
 
-        public static int[] Sort(int[] arr)
+        public static int[] Sort(int[] arr, Chart _chart)
         {
+            chart = _chart;
             Sort(arr, 0, arr.Length - 1);
             return arr;
         }

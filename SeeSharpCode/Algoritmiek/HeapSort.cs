@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Windows.Forms.DataVisualization.Charting;
 
-namespace Sorting
+namespace WindowsFormsApplication1
 {
     public static class HeapSort
     {
-        private static void HeapSort(int[] arr)
+        private static Chart chart;
+        private static void heapSort(int[] arr)
         {
             int n = arr.Length;
             int i = n / 2;
@@ -41,17 +44,23 @@ namespace Sorting
                         arr[parent] = arr[child];
                         parent = child;
                         child = (parent * 2) + 1;
+                        //chart.Series["Series1"].Points.DataBindY(new IEnumerable<int>[] { arr });
+                        //chart.Update();
                     }
                     else
                         break;
                 }
                 arr[parent] = t;
+                chart.Series["Series1"].Points.DataBindY(new IEnumerable<int>[] { arr });
+                chart.Update();
+
             }
         }
 
-        public static int[] Sort(int[] arr)
+        public static int[] Sort(int[] arr, Chart _chart)
         {
-            HeapSort(arr);
+            chart = _chart;
+            heapSort(arr);
             return arr;
         }
     }

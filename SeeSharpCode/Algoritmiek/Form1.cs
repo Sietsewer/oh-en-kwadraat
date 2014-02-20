@@ -14,7 +14,8 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        public int selected;
+        public int selectedSort = 0;
+        public int selectedShuffle = 0;
         public static int[] data;
         public int amount = 50;
         public Form1()
@@ -25,26 +26,29 @@ namespace WindowsFormsApplication1
             init();
 
         }
-
+        Shuffle s = new Shuffle();
         private void init()
         {
-            List<int> list = new List<int>();
-            for (int i = 0; i < amount; i++)
+            this.drp_Shuffle.SelectedIndex = this.selectedShuffle;
+            switch (this.selectedShuffle)
             {
-                list.Add(i+1);
+                case Constants.random:
+                    s.shuffleAll(ref data, amount);
+                    break;
+                case Constants.reverse:
+                    s.Reverse(ref data, amount);
+                    break;
+                case Constants.first:
+                    s.First(ref data, amount);
+                    break;
+                case Constants.last:
+                    s.Last(ref data, amount);
+                    break;
             }
-
-            data = new int[amount];
-            Random r = new Random();
-            for (int j = 0; j < data.Length - 1; j++)
-            {
-                int i = r.Next(0, list.Count - 1);
-                data[j] = list[i];
-                list.RemoveAt(i);
-            }
+            
             chart1.Series["Series1"].Points.DataBindY(new IEnumerable<int>[] { data });
             this.txt_Elements.Text = this.amount + "";
-            this.drp_Sort.SelectedIndex = this.selected;
+            this.drp_Sort.SelectedIndex = this.selectedSort;
         }
 
         private void chart1_Click(object sender, EventArgs e)
@@ -69,16 +73,17 @@ namespace WindowsFormsApplication1
                         array[i] = array[j];
 
                         array[j] = temp;
+                        chart1.Series["Series1"].Points.DataBindY(new IEnumerable<int>[] { data });
+                        this.chart1.Update();
                     }
-                    chart1.Series["Series1"].Points.DataBindY(new IEnumerable<int>[] { data });
-                    this.chart1.Update();
+                    
                 }
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            switch (selected)
+            switch (selectedSort)
             {
                 case Constants.bogo_Sort:
                     bogoSnort(ref data);
@@ -142,7 +147,12 @@ namespace WindowsFormsApplication1
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selected = this.drp_Sort.SelectedIndex;
+            selectedSort = this.drp_Sort.SelectedIndex;
+        }
+
+        private void drp_Shuffle_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.selectedShuffle = this.drp_Shuffle.SelectedIndex;
         }
     }
 }
